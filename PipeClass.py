@@ -11,11 +11,16 @@ class Pipe:
         self.basesize = baseSize
         self.toprect = self.IMGS[1].get_rect(bottomleft = [SCREEN_SIZE[0], self.middle - self.gap/2])
         self.bottomrect = self.IMGS[0].get_rect(topleft = [SCREEN_SIZE[0], self.middle + self.gap/2])
+        self.passed = False
 
     def display(self,screen):
         screen.blit(self.IMGS[0],self.bottomrect)
         screen.blit(self.IMGS[1],self.toprect)
 
-    def move(self):
+    def move(self,Birdie):
         self.toprect.x -= self.velo
         self.bottomrect.x -= self.velo
+
+        if Birdie.x >= self.toprect.x + self.size[0] and self.passed == False:
+            self.passed = True
+            Birdie.score += 1

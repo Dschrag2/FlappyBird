@@ -28,13 +28,23 @@ def initIMGS(FACTOR):
 
 def Text(Birdie):
     pygame.font.init()
-    pygame.display.set_caption('Show Text')
     font = pygame.font.SysFont('timesnewroman',  30)
-    text = font.render(f'Velo = {Birdie.velo}', True, (0,0,0))
+    text = font.render(f'Score: {Birdie.score}', True, (0,0,0))
     textRect = text.get_rect()
     textRect.topleft = (0,0)
-    return font,text,textRect
+    return font,textRect
 
-def draw_text(velo,font,screen,textRect):
-    text = font.render(f'Velo = {round(velo,2)}', True, (0,0,0))
+def draw_text(score,font,screen,textRect):
+    text = font.render(f'Score: {score}', True, (0,0,0))
+    screen.blit(text,textRect)
+
+def finalText(SCREEN_SIZE):
+    font = pygame.font.SysFont('Arial',  75)
+    text = font.render(f'Game Over', True, (252,78,3))
+    textRect = text.get_rect()
+    textRect.center = (SCREEN_SIZE[0]/2,SCREEN_SIZE[1]/3)
+    return font,textRect
+
+def draw_finalText(font,screen,textRect):
+    text = font.render(f'Game Over', True, (252,78,3))
     screen.blit(text,textRect)

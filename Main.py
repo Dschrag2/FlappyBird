@@ -9,6 +9,7 @@ import PipeClass
 FPS = 30
 FACTOR = 1.5
 count = 0
+score = 0
 Pipes = []
 
 # Creating a clock object
@@ -25,10 +26,14 @@ screen = pygame.display.set_mode(SCREEN_SIZE)
 Birdie = BirdClass.Bird(SCREEN_SIZE,Bird_Imgs)
 
 # Intializing Text
-font,text,textRect = Func.Text(Birdie)
+font,textRect = Func.Text(Birdie)
+font2,textRect2 = Func.finalText(SCREEN_SIZE)
 
 # pygame setup
 pygame.init()
+
+# Setting window title
+pygame.display.set_caption('Flappy Bird')
 
 while True:
     count += 1
@@ -46,11 +51,13 @@ while True:
         Birdie.jump()
 
     # Moving Birds
-    Birdie.move(baserect)
+    end = Birdie.move(baserect,Pipes)
+    if (end):
+        break
 
     # Moving all Pipes and checking if pipes are off screen
     for Pipe in Pipes:
-        Pipe.move()
+        Pipe.move(Birdie)
         if Pipe.toprect.x < -1*Pipe.toprect.width:
             rem.append(Pipe)
 
@@ -64,8 +71,24 @@ while True:
     for Pipe in Pipes:
         Pipe.display(screen)
     screen.blit(base,baserect)
-    Func.draw_text(Birdie.velo,font,screen,textRect)
+    Func.draw_text(Birdie.score,font,screen,textRect)
     Birdie.display(screen)
+ 
+    pygame.display.flip()
+    clock.tick(FPS)
+
+# Post death screen
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT: sys.exit()
+
+    screen.blit(bg,(0,0))
+    for Pipe in Pipes:
+        Pipe.display(screen)
+    screen.blit(base,baserect)
+    Func.draw_text(Birdie.score,font,screen,textRect)
+    Birdie.display(screen)
+    Func.draw_finalText(font2,screen,textRect2)
 
     pygame.display.flip()
     clock.tick(FPS)

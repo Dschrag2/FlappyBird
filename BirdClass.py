@@ -1,4 +1,5 @@
 import pygame
+import sys
 
 class Bird:
     def __init__(self,SCREEN_SIZE,IMGS):
@@ -11,12 +12,13 @@ class Bird:
         self.rect = self.IMGS[0].get_rect(topright = [self.x, self.y])
         self.screensize = SCREEN_SIZE
         self.rect.y = self.y
+        self.score = 0
 
     def jump(self):
         self.velo = -12
         self.tick_count = 0
 
-    def move(self,baserect):
+    def move(self,baserect,Pipes):
         self.tick_count += 1
         self.velo = self.velo + self.accel
         self.rect = self.rect.move([0,self.velo])
@@ -30,6 +32,11 @@ class Bird:
         if self.rect.colliderect(baserect):
             self.velo = 0
             self.rect.y = self.screensize[1] - baserect.height - self.rect.height
+
+        for pipe in Pipes:
+            if self.rect.colliderect(pipe.toprect) or self.rect.colliderect(pipe.bottomrect):
+                return True
+        return False
 
     def display(self,screen):
         if self.velo == 0:
