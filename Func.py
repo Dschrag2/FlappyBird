@@ -26,25 +26,17 @@ def initIMGS(FACTOR):
     PIPE_IMGS[1] = pygame.transform.flip(PIPE_IMGS[1],False,True)
     return BIRD_IMGS,PIPE_IMGS
 
-def Text(Birdie):
-    pygame.font.init()
-    font = pygame.font.SysFont('timesnewroman',  30)
-    text = font.render(f'Score: {Birdie.score}', True, (0,0,0))
-    textRect = text.get_rect()
-    textRect.topleft = (0,0)
-    return font,textRect
+def draw_text(SCREEN_SIZE,font,screen,score,gen,alive):
+    text1 = font.render(f'Score: {score}', True, (0,0,0))
+    text2 = font.render(f'Gen: {gen}',True, (0,0,0))
+    text3 = font.render(f'Alive: {alive}', True, (0,0,0))
+    textRect1 = text1.get_rect()
+    textRect2 = text1.get_rect()
+    textRect3 = text1.get_rect()
+    textRect1.topright = (SCREEN_SIZE[0]-25,0)
+    textRect2.topleft = (0,0)
+    textRect3.topleft = (0,25)
+    screen.blit(text1,textRect1)
+    screen.blit(text2,textRect2)
+    screen.blit(text3,textRect3)
 
-def draw_text(score,font,screen,textRect):
-    text = font.render(f'Score: {score}', True, (0,0,0))
-    screen.blit(text,textRect)
-
-def finalText(SCREEN_SIZE):
-    font = pygame.font.SysFont('Arial',  75)
-    text = font.render(f'Game Over', True, (252,78,3))
-    textRect = text.get_rect()
-    textRect.center = (SCREEN_SIZE[0]/2,SCREEN_SIZE[1]/3)
-    return font,textRect
-
-def draw_finalText(font,screen,textRect):
-    text = font.render(f'Game Over', True, (252,78,3))
-    screen.blit(text,textRect)

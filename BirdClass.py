@@ -9,10 +9,9 @@ class Bird:
         self.accel = 1.2
         self.tick_count = 0
         self.IMGS = IMGS
-        self.rect = self.IMGS[0].get_rect(topright = [self.x, self.y])
+        self.rect = self.IMGS[0].get_rect(topleft = [self.x, self.y])
         self.screensize = SCREEN_SIZE
         self.rect.y = self.y
-        self.score = 0
 
     def jump(self):
         self.velo = -12
@@ -30,8 +29,8 @@ class Bird:
 
         #Checking for collisions between bird and ground
         if self.rect.colliderect(baserect):
-            self.velo = 0
             self.rect.y = self.screensize[1] - baserect.height - self.rect.height
+            return True
 
         for pipe in Pipes:
             if self.rect.colliderect(pipe.toprect) or self.rect.colliderect(pipe.bottomrect):
